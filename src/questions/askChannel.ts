@@ -1,4 +1,4 @@
-import { DMChannel, Guild } from 'discord.js';
+import { ChannelType, DMChannel, Guild } from 'discord.js';
 import { askQuestion } from '../utils/askQuestion';
 import { StandbyEvent } from '../types/eventTypes';
 
@@ -9,8 +9,15 @@ export async function askChannel(
   event: StandbyEvent
 ): Promise<void> {
   const channels = await guild.channels.fetch();
-  const textChannels = channels.filter((ch): ch is any => ch?.type === 0);
-  const channelList = Array.from(textChannels.values())
+  const textChannels = guild.channels.cache
+    .filter(c => c.isTextBased() && c.type === ChannelType.GuildText)
+    .map(c => ({
+      id: c.id,
+      name: c.parent ? `${c.parent.name} / ${c.name}` : c.name
+    }))
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  const channelList = textChannels
     .map((ch, index) => `${index + 1}. ${ch.name}`)
     .join('\n');
 

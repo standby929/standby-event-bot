@@ -1,8 +1,13 @@
+type EventUser = {
+  id: string;
+  name: string;
+};
+
 export interface EventOption {
   label: string;
   roleId: string | null;
   roleName: string | null;
-  users: string[];
+  users: EventUser[];
   maxUsers?: number;
 }
 

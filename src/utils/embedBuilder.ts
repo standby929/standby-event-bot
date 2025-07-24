@@ -15,9 +15,13 @@ export function buildEventEmbed(event: StandbyEvent): EmbedBuilder {
         const maxCount = opt.maxUsers ?? null;
         const countText = maxCount ? `(${userCount} / ${maxCount})` : `(${userCount})`;
 
+        const userList = userCount > 0
+          ? opt.users.map(u => u.name).join('\n')
+          : '_Még senki_';
+
         return {
           name: `${opt.label} ${countText}`,
-          value: userCount > 0 ? opt.users.join('\n') : '_Még senki_',
+          value: userList,
           inline: true
         };
       })
