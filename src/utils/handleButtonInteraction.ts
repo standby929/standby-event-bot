@@ -66,14 +66,15 @@ export async function handleButtonInteraction(
     return;
   }
 
-  const username = interaction.user.username;
-  const currentIndex = event.options.findIndex(opt => opt.users.includes(username));
+  const userId = member.id;
+  const displayName = member.displayName;
 
+  const currentIndex = event.options.findIndex(opt => opt.users.some(u => u.id === userId));
   const isAlreadyInThisOption = currentIndex === optionIndex;
 
   if (isAlreadyInThisOption) {
     // ugyanarra kattintott → törlés
-    option.users = option.users.filter(u => u !== username);
+    option.users = option.users.filter(u => u.id !== userId);
   } else {
     // ha az új opció max kapacitáson van, és nem mi vagyunk benne → nem lehet jelentkezni
     if (option.maxUsers && option.users.length >= option.maxUsers) {
@@ -86,11 +87,11 @@ export async function handleButtonInteraction(
 
     // máshol van már → onnan törlés
     if (currentIndex !== -1) {
-      event.options[currentIndex].users = event.options[currentIndex].users.filter(u => u !== username);
+      event.options[currentIndex].users = event.options[currentIndex].users.filter(u => u.id !== userId);
     }
 
     // új helyre hozzáadás
-    option.users.push(username);
+    option.users.push({ id: userId, name: displayName });
   }
 
   // Build updated embed
