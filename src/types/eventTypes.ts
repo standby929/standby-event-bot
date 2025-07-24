@@ -14,4 +14,5 @@ export interface StandbyEvent {
   end: string;
   options: EventOption[];
   messageId?: string;
+  createdBy: string;
 }

@@ -1,6 +1,5 @@
 import {
   ButtonInteraction,
-  EmbedBuilder,
   GuildMember,
 } from 'discord.js';
 import { StandbyEvent } from '../types/eventTypes';
@@ -13,6 +12,11 @@ export async function handleButtonInteraction(
 ): Promise<void> {
   const messageId = interaction.message.id;
   const event = activeEvents.get(messageId);
+
+  // Lejárt eseményre már nem lehet jelentkezni
+  const now = new Date();
+  const eventStart = new Date(event?.start || '');
+  const isExpired = eventStart < now;
 
   if (interaction.customId === 'delete') {
     const member = interaction.member as GuildMember;
@@ -32,6 +36,14 @@ export async function handleButtonInteraction(
     }
 
     await interaction.message.delete();
+    return;
+  }
+
+  if (isExpired) {
+    await interaction.reply({
+      content: '⏰ Ez az esemény már elkezdődött. Nem lehet rá jelentkezni.',
+      ephemeral: true
+    });
     return;
   }
 
@@ -82,7 +94,7 @@ export async function handleButtonInteraction(
   }
 
   // Build updated embed
-  const embed = buildEventEmbed(event, username);
+  const embed = buildEventEmbed(event);
 
   await interaction.update({ embeds: [embed] });
   await saveEventToFile(event);
