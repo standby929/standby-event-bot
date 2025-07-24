@@ -99,3 +99,6 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
     console.error('❌ Parancsregisztrációs hiba:', error);
   }
 })();
+
+// We need this hack to mislead the cloud providers if we want to deploy it as a web service...
+import './server';
