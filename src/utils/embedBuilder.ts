@@ -1,0 +1,29 @@
+import { EmbedBuilder } from 'discord.js';
+import { StandbyEvent } from '../types/eventTypes';
+
+export function buildEventEmbed(event: StandbyEvent, createdBy: string): EmbedBuilder {
+  const embed = new EmbedBuilder()
+    .setTitle(`📅 ${event.title}`)
+    .setDescription(event.description || '_Nincs leírás megadva_')
+    .addFields(
+      {
+        name: '🕒 Időpont',
+        value: `<t:${Math.floor(new Date(event.start).getTime() / 1000)}> – <t:${Math.floor(new Date(event.end).getTime() / 1000)}>`
+      },
+      ...event.options.map(opt => {
+        const userCount = opt.users.length;
+        const maxCount = opt.maxUsers ?? null;
+        const countText = maxCount ? `(${userCount} / ${maxCount})` : `(${userCount})`;
+
+        return {
+          name: `${opt.label} ${countText}`,
+          value: userCount > 0 ? opt.users.join('\n') : '_Még senki_',
+          inline: true
+        };
+      })
+    )
+    .setColor(0x00bfff)
+    .setFooter({ text: `Létrehozta: ${createdBy}` });
+
+  return embed;
+}

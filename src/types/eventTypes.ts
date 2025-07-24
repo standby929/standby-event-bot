@@ -3,6 +3,7 @@ export interface EventOption {
   roleId: string | null;
   roleName: string | null;
   users: string[];
+  maxUsers?: number;
 }
 
 export interface StandbyEvent {

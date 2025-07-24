@@ -4,7 +4,8 @@ import {
   GuildMember,
 } from 'discord.js';
 import { StandbyEvent } from '../types/eventTypes';
-import { saveEventToFile } from './persistence';
+import { deleteEventFile, saveEventToFile } from './persistence';
+import { buildEventEmbed } from './embedBuilder';
 
 export async function handleButtonInteraction(
   interaction: ButtonInteraction,
@@ -12,6 +13,28 @@ export async function handleButtonInteraction(
 ): Promise<void> {
   const messageId = interaction.message.id;
   const event = activeEvents.get(messageId);
+
+  if (interaction.customId === 'delete') {
+    const member = interaction.member as GuildMember;
+    const isAdmin = member.roles.cache.some(role => role.name.toLowerCase() === 'admin');
+
+    if (!isAdmin) {
+      await interaction.reply({
+        content: '❌ Csak admin törölhet eseményt.',
+        ephemeral: true
+      });
+      return;
+    }
+
+    if (event) {
+      activeEvents.delete(messageId);
+      await deleteEventFile(messageId);
+    }
+
+    await interaction.message.delete();
+    return;
+  }
+
   if (!event) return;
 
   const optionIndex = parseInt(interaction.customId.replace('opt_', ''), 10);
@@ -34,35 +57,32 @@ export async function handleButtonInteraction(
   const username = interaction.user.username;
   const currentIndex = event.options.findIndex(opt => opt.users.includes(username));
 
-  if (currentIndex === optionIndex) {
-    // ugyanarra kattintott, mint amiben már benne van → törlés
+  const isAlreadyInThisOption = currentIndex === optionIndex;
+
+  if (isAlreadyInThisOption) {
+    // ugyanarra kattintott → törlés
     option.users = option.users.filter(u => u !== username);
   } else {
+    // ha az új opció max kapacitáson van, és nem mi vagyunk benne → nem lehet jelentkezni
+    if (option.maxUsers && option.users.length >= option.maxUsers) {
+      await interaction.reply({
+        content: `❌ Ez az opció elérte a maximális (${option.maxUsers}) főt.`,
+        ephemeral: true,
+      });
+      return;
+    }
+
     // máshol van már → onnan törlés
     if (currentIndex !== -1) {
       event.options[currentIndex].users = event.options[currentIndex].users.filter(u => u !== username);
     }
+
     // új helyre hozzáadás
     option.users.push(username);
   }
 
   // Build updated embed
-  const embed = new EmbedBuilder()
-    .setTitle(`📅 ${event.title}`)
-    .setDescription(event.description || '_Nincs leírás megadva_')
-    .addFields(
-      {
-        name: '🕒 Időpont',
-        value: `<t:${Math.floor(new Date(event.start).getTime() / 1000)}> – <t:${Math.floor(new Date(event.end).getTime() / 1000)}>`
-      },
-      ...event.options.map(opt => ({
-        name: opt.label,
-        value: opt.users.length > 0 ? opt.users.join(', ') : '_Még senki_',
-        inline: true
-      }))
-    )
-    .setColor(0x00bfff)
-    .setFooter({ text: `Létrehozta: ${interaction.message.interaction?.user.username || 'ismeretlen'}` });
+  const embed = buildEventEmbed(event, username);
 
   await interaction.update({ embeds: [embed] });
   await saveEventToFile(event);
