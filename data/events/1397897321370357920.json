@@ -1,0 +1,39 @@
+{
+  "title": "Teszt esemény",
+  "description": "Ez itt egy teszt esemény, hogy megnézzem mit kell még a bot-on fejleszteni...",
+  "channelId": "1397247669109522545",
+  "start": "2025-07-30T08:10:00.000Z",
+  "end": "2025-07-30T13:13:00.000Z",
+  "options": [
+    {
+      "label": "Jövök",
+      "roleId": "1374399622226776195",
+      "roleName": "gt7",
+      "users": [
+        "ricsard26",
+        "zoli01725"
+      ]
+    },
+    {
+      "label": "Nem jövök",
+      "roleId": "1374399622226776195",
+      "roleName": "gt7",
+      "users": []
+    },
+    {
+      "label": "Még nem tudom",
+      "roleId": "1374399622226776195",
+      "roleName": "gt7",
+      "users": [
+        "standby929"
+      ]
+    },
+    {
+      "label": "Beugrósnak jönnék",
+      "roleId": "1396765984408207451",
+      "roleName": "GT7-beugros",
+      "users": []
+    }
+  ],
+  "messageId": "1397897321370357920"
+}
