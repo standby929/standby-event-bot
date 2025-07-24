@@ -17,8 +17,13 @@ import { askOptions } from './questions/askOptions';
 import { postEventMessage } from './utils/postEventMessage';
 import { handleButtonInteraction } from './utils/handleButtonInteraction';
 import { loadEventsFromFiles } from './utils/persistence';
+import { cleanupOldEvents } from './utils/cleanupOldEvents';
 
 dotenv.config();
+
+setInterval(() => {
+  cleanupOldEvents();
+}, 1000 * 60 * 60 * 24); // Clean up expired event json files once a day
 
 const TOKEN = process.env.DISCORD_TOKEN!;
 const CLIENT_ID = process.env.CLIENT_ID!;
@@ -58,6 +63,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       start: '',
       end: '',
       options: [],
+      createdBy: '',
     };
 
     await askChannel(dm, interaction.user.id, guild, event);
@@ -93,3 +99,6 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
     console.error('❌ Parancsregisztrációs hiba:', error);
   }
 })();
+
+// We need this hack to mislead the cloud providers if we want to deploy it as a web service...
+import './server';

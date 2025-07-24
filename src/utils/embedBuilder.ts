@@ -1,7 +1,7 @@
 import { EmbedBuilder } from 'discord.js';
 import { StandbyEvent } from '../types/eventTypes';
 
-export function buildEventEmbed(event: StandbyEvent, createdBy: string): EmbedBuilder {
+export function buildEventEmbed(event: StandbyEvent): EmbedBuilder {
   const embed = new EmbedBuilder()
     .setTitle(`📅 ${event.title}`)
     .setDescription(event.description || '_Nincs leírás megadva_')
@@ -23,7 +23,7 @@ export function buildEventEmbed(event: StandbyEvent, createdBy: string): EmbedBu
       })
     )
     .setColor(0x00bfff)
-    .setFooter({ text: `Létrehozta: ${createdBy}` });
+    .setFooter({ text: `Létrehozta: ${event.createdBy}` });
 
   return embed;
 }

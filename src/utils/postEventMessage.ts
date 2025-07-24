@@ -22,7 +22,7 @@ export async function postEventMessage(
     return;
   }
 
-  const embed = buildEventEmbed(event, username);
+  const embed = buildEventEmbed(event);
 
   const row = new ActionRowBuilder<ButtonBuilder>();
 
@@ -52,6 +52,7 @@ export async function postEventMessage(
 
   const message = await (targetChannel as any).send({ embeds: [embed], components: [row] });
   event.messageId = message.id;
+  event.createdBy = username;
   activeEvents.set(message.id, event);
 
   await saveEventToFile(event);
