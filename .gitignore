@@ -22,3 +22,4 @@ yarn-error.log*
 
 # Optional: test output or coverage
 coverage/
+data/

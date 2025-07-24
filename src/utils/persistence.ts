@@ -44,10 +44,11 @@ export async function loadEventsFromFiles(): Promise<Map<string, StandbyEvent>> 
 }
 
 export async function deleteEventFile(messageId: string): Promise<void> {
-  const filename = path.join(EVENTS_DIR, `${messageId}.json`);
+  const filePath = path.join(__dirname, '..', 'data', 'events', `${messageId}.json`);
   try {
-    await fs.unlink(filename);
+    await fs.unlink(filePath);
+    console.log(`🗑️ Törölve: ${filePath}`);
   } catch (err) {
-    console.error('❌ Nem sikerült törölni a fájlt:', err);
+    console.warn(`⚠️ Nem sikerült törölni a fájlt (${filePath}):`, err);
   }
 }

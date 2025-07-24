@@ -1,6 +1,5 @@
 import {
   DMChannel,
-  EmbedBuilder,
   ActionRowBuilder,
   ButtonBuilder,
   ButtonStyle,
@@ -8,6 +7,7 @@ import {
 } from 'discord.js';
 import { EventOption, StandbyEvent } from '../types/eventTypes';
 import { saveEventToFile } from './persistence';
+import { buildEventEmbed } from './embedBuilder';
 
 export async function postEventMessage(
   dm: DMChannel,
@@ -22,22 +22,7 @@ export async function postEventMessage(
     return;
   }
 
-  const embed = new EmbedBuilder()
-    .setTitle(`📅 ${event.title}`)
-    .setDescription(event.description || '_Nincs leírás megadva_')
-    .addFields(
-      {
-        name: '🕒 Időpont',
-        value: `<t:${Math.floor(new Date(event.start).getTime() / 1000)}> – <t:${Math.floor(new Date(event.end).getTime() / 1000)}>`,
-      },
-      ...event.options.map(opt => ({
-        name: opt.label,
-        value: opt.users.length > 0 ? opt.users.join('\n') : '_Még senki_',
-        inline: true
-      }))
-    )
-    .setColor(0x00bfff)
-    .setFooter({ text: `Létrehozta: ${username}` });
+  const embed = buildEventEmbed(event, username);
 
   const row = new ActionRowBuilder<ButtonBuilder>();
 
@@ -57,6 +42,13 @@ export async function postEventMessage(
         .setStyle(style)
     );
   });
+
+  row.addComponents(
+    new ButtonBuilder()
+      .setCustomId(`delete`)
+      .setLabel('🗑️ Törlés')
+      .setStyle(ButtonStyle.Danger)
+  );
 
   const message = await (targetChannel as any).send({ embeds: [embed], components: [row] });
   event.messageId = message.id;

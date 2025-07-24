@@ -12,7 +12,7 @@ export async function askOptions(
   const filteredRoles = roles.filter(r => r.name !== '@everyone' && !r.managed);
 
   const roleList = filteredRoles.map(role => `- ${role.name}`).join('\n');
-  await dm.send(`📜 Elérhető szerepkörök:\n${roleList}\n\nAdj meg válaszopciókat a következő formátumban:\n\`válasz szöveg|role név\` vagy csak \`válasz szöveg\`\nÍrd be, hogy \`Kész\` ha végeztél.`);
+  await dm.send(`📜 Elérhető szerepkörök:\n${roleList}\n\nAdj meg válaszopciókat a következő formátumban:\n\`válasz szöveg | szerepkör | max létszám\`\nBármelyik mező kihagyható. Írd be, hogy \`Kész\` ha végeztél.`);
 
   event.options = [];
 
@@ -25,7 +25,11 @@ export async function askOptions(
 
     if (input.toLowerCase() === 'kész') break;
 
-    const [labelRaw, roleNameRaw] = input.split('|').map(x => x.trim());
+    const parts = input.split('|').map(x => x.trim());
+    const labelRaw = parts[0];
+    const roleNameRaw = parts[1];
+    const maxRaw = parts[2];
+
     if (!labelRaw) {
       await dm.send('⚠️ A válasz szöveg nem lehet üres.');
       continue;
@@ -49,13 +53,24 @@ export async function askOptions(
       roleDisplay = matchedRole.name;
     }
 
+    let maxUsers: number | undefined = undefined;
+    if (maxRaw) {
+      const parsedMax = parseInt(maxRaw, 10);
+      if (isNaN(parsedMax) || parsedMax <= 0) {
+        await dm.send('⚠️ A maximális létszámnak pozitív egész számnak kell lennie.');
+        continue;
+      }
+      maxUsers = parsedMax;
+    }
+
     event.options.push({
       label: labelRaw,
       roleId,
       roleName: roleId ? roleDisplay : null,
+      maxUsers,
       users: []
     });
 
-    await dm.send(`✅ Hozzáadva: ${labelRaw} (${roleDisplay})`);
+    await dm.send(`✅ Hozzáadva: ${labelRaw} (${roleDisplay}${maxUsers ? `, max ${maxUsers} fő` : ''})`);
   }
 }
