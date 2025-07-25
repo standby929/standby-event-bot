@@ -1,13 +1,13 @@
 import { DMChannel, Message } from 'discord.js';
 
 /**
- * Egyszerű kérdés-válasz logika privát csatornán.
+ * Simple question-answer logic in a private channel
  */
 export async function askQuestion(
   dm: DMChannel,
   userId: string,
   question: string,
-  timeoutMs = 60000
+  timeoutMs = 60000,
 ): Promise<string | null> {
   await dm.send(question);
   try {
@@ -15,7 +15,7 @@ export async function askQuestion(
       filter: (m: Message) => m.author.id === userId,
       max: 1,
       time: timeoutMs,
-      errors: ['time']
+      errors: ['time'],
     });
     return collected.first()?.content?.trim() ?? null;
   } catch {

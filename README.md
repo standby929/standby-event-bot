@@ -4,8 +4,6 @@ This is a small proof of concept to recreate something similar to the **Apollo B
 
 So, this is a simple and interactive **Discord bot** that helps you create events with custom RSVP options in a private conversation. Users can sign up for options (like "I'm coming", "Maybe", "Waitlist") by clicking buttons. Great for gaming groups, teams, or communities that would like to involve a little-bit of role handling as well.
 
-
-
 ## What can this bot do?
 
 - Ask you (privately) about your event details
@@ -15,8 +13,6 @@ So, this is a simple and interactive **Discord bot** that helps you create event
 - Let you delete an event with a button (admin only)
 - Keep your event data clean and tidy automatically
 
-
-
 ## What you need before you start
 
 1. A free [Discord account](https://discord.com)
@@ -24,8 +20,6 @@ So, this is a simple and interactive **Discord bot** that helps you create event
 3. A [GitHub](https://github.com) or any other version control system account
 4. Node.js installed on your computer (see below)
 5. A bit of patience :D
-
-
 
 ## How to install it (on your computer)
 
@@ -56,6 +50,7 @@ cd /c/discord/standby-event-bot
 ```
 
 Then install the required dependencies:
+
 ```bash
 npm install
 ```
@@ -65,24 +60,24 @@ npm install
 #### Create a bot on the Discord Developer Portal
 
 1. Go to https://discord.com/developers/applications
-2 Click on `New Application`
-3. Give it a name (e.g. Standby bot)
-4. Go to the **"Bot"** section on the left and click `Add bot`
-5. Under **Privileged Gateway Intents** enable:
-    - Message Content Intent
-    - Server Members Intent
-6. Under **Token**, click `Copy` and save it somewhere (you'll need it soon)
+   2 Click on `New Application`
+2. Give it a name (e.g. Standby bot)
+3. Go to the **"Bot"** section on the left and click `Add bot`
+4. Under **Privileged Gateway Intents** enable:
+   - Message Content Intent
+   - Server Members Intent
+5. Under **Token**, click `Copy` and save it somewhere (you'll need it soon)
 
 #### Invite the bot to you server
 
 1. Go to the **"Oauth2" > URL Generator**
 2. Under **Scopes** check:
-    - `bot`
-    - `applications.commans`
+   - `bot`
+   - `applications.commans`
 3. Under **Bot Permissions** check
-    - `Send Messages`
-    - `Manage Messages`
-    - `Read Message History`
+   - `Send Messages`
+   - `Manage Messages`
+   - `Read Message History`
 4. Copy the generated URL at the bottom and open it in your browser
 5. Choose your server and authorize the bot
 
@@ -97,20 +92,23 @@ GUILD_ID=your-server-id-here
 ```
 
 To find your:
+
 - DISCORD_TOKEN -> from the bor page
 - CLIENT_ID -> from the **Application > General info** page
-- GUILD_ID -> right click your server name in Discord - Copy Server ID  
-_(You must enable "Developer Mode" in Disord's settings first)_
+- GUILD*ID -> right click your server name in Discord - Copy Server ID  
+  *(You must enable "Developer Mode" in Disord's settings first)\_
 
 ### Step 6 - Start the bot!
 
 In your terminal, just run:
+
 ```bash
 npm run build
 npm run start
 ```
 
 You should see:
+
 ```bash
 📦 Slash command registered.
 ✅ Bot logged in: standby-event-bot#0000
@@ -129,11 +127,11 @@ If you don't want to run the bot from your computer all the time, you can **depl
 
    - **Name**: anything (e.g. `standby-bot`)
    - **Environment**: `Node`
-   - **Build Command**:  
+   - **Build Command**:
      ```bash
      npm install && npm run build
      ```
-   - **Start Command**:  
+   - **Start Command**:
      ```bash
      npm run start
      ```
@@ -150,7 +148,8 @@ If you don't want to run the bot from your computer all the time, you can **depl
 - Your `.env` file **should not be uploaded** to GitHub (add `.env` to `.gitignore`)
 - Instead, enter the same values manually under **"Environment Variables"** in Render
 
-Once deployed, the bot will run 24/7 without needing your computer on.  
+Once deployed, the bot will run on render.com without needing your computer on.  
+Free tier on render.com puts to sleep web services after 15 minutes, so I recommend using for example `uptimerobot` to ping the URL of the bot in every 5-10 minutes to keep it awake and available.  
 You can still run it locally too — just don’t run both at the same time.
 
 ---
@@ -175,10 +174,12 @@ The bot will post an event card into the selected channel with buttons.
 ## Notes
 
 - Only people with the correct roles (if defined) can click certain options
-- You can define max number of people per option like this:  
+- You can define max number of people per option like this:
+
 ```sql
 Coming|Member|16
 ```
+
 - Users can only sign up to one option at a time
 - If they click again, it updates or removes their previous response
 - Only admins can delete an event
@@ -187,6 +188,5 @@ Coming|Member|16
 
 Events are stored in a `.json` file.  
 Old events are automatically deleted after they end to keep data folder clean
-
 
 The application is communicating in **hungarian** only for the time being. Later, maybe I will add multiple language support as well but it wasn't a priority thing for now.

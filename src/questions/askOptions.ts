@@ -1,25 +1,21 @@
 import { DMChannel, Guild } from 'discord.js';
 import { askQuestion } from '../utils/askQuestion';
 import { StandbyEvent } from '../types/eventTypes';
+import i18next from 'i18next';
 
-export async function askOptions(
-  dm: DMChannel,
-  userId: string,
-  guild: Guild,
-  event: StandbyEvent
-): Promise<void> {
+export async function askOptions(dm: DMChannel, userId: string, guild: Guild, event: StandbyEvent): Promise<void> {
   const roles = await guild.roles.fetch();
   const filteredRoles = roles.filter(r => r.name !== '@everyone' && !r.managed);
 
   const roleList = filteredRoles.map(role => `- ${role.name}`).join('\n');
-  await dm.send(`📜 Elérhető szerepkörök:\n${roleList}\n\nAdj meg válaszopciókat a következő formátumban:\n\`válasz szöveg | szerepkör | max létszám\`\nBármelyik mező kihagyható. Írd be, hogy \`Kész\` ha végeztél.`);
+  await dm.send(i18next.t('askOptions.intro', { roleList }));
 
   event.options = [];
 
   while (true) {
-    const input = await askQuestion(dm, userId, '➕ Új válaszopció:');
+    const input = await askQuestion(dm, userId, i18next.t('askOptions.prompt'));
     if (!input) {
-      await dm.send('❌ Nem kaptam választ. Kiléptem.');
+      await dm.send(i18next.t('error.noResponse'));
       throw new Error('no-response');
     }
 
@@ -31,22 +27,22 @@ export async function askOptions(
     const maxRaw = parts[2];
 
     if (!labelRaw) {
-      await dm.send('⚠️ A válasz szöveg nem lehet üres.');
+      await dm.send(i18next.t('askOptions.emptyLabel'));
       continue;
     }
 
     if (event.options.some(opt => opt.label.toLowerCase() === labelRaw.toLowerCase())) {
-      await dm.send('⚠️ Már van ilyen opció. Adj meg újat.');
+      await dm.send(i18next.t('askOptions.duplicateLabel'));
       continue;
     }
 
     let roleId: string | null = null;
-    let roleDisplay = '*mindenki*';
+    let roleDisplay = i18next.t('askOptions.everyone');
 
     if (roleNameRaw) {
       const matchedRole = filteredRoles.find(role => role.name.toLowerCase() === roleNameRaw.toLowerCase());
       if (!matchedRole) {
-        await dm.send(`❌ Nem található ilyen szerepkör: ${roleNameRaw}`);
+        await dm.send(i18next.t('askOptions.roleNotFound', { role: roleNameRaw }));
         continue;
       }
       roleId = matchedRole.id;
@@ -57,7 +53,7 @@ export async function askOptions(
     if (maxRaw) {
       const parsedMax = parseInt(maxRaw, 10);
       if (isNaN(parsedMax) || parsedMax <= 0) {
-        await dm.send('⚠️ A maximális létszámnak pozitív egész számnak kell lennie.');
+        await dm.send(i18next.t('askOptions.invalidMax'));
         continue;
       }
       maxUsers = parsedMax;
@@ -68,9 +64,9 @@ export async function askOptions(
       roleId,
       roleName: roleId ? roleDisplay : null,
       maxUsers,
-      users: []
+      users: [],
     });
 
-    await dm.send(`✅ Hozzáadva: ${labelRaw} (${roleDisplay}${maxUsers ? `, max ${maxUsers} fő` : ''})`);
+    await dm.send(i18next.t('askOptions.added', { label: labelRaw, role: roleDisplay, max: maxUsers ?? '' }));
   }
 }

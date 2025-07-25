@@ -1,0 +1,76 @@
+{
+  "dm": {
+    "start": "We continue creating the event in private."
+  },
+  "common": {
+    "start": "Creating event in private",
+    "none": "none"
+  },
+  "askChannel": {
+    "prompt": "📢 What channel do you want to post the event?\n{{channels}}",
+    "invalid": "❌ Invalid number. I quit."
+  },
+  "askTitle": {
+    "prompt": "📝 What's the title of the event? (max 50 chars)",
+    "invalid": "❌ Wrong title. I quit."
+  },
+  "askStartTime": {
+    "prompt": "⏰ Start date (YYYY-MM-DD HH:MM):",
+    "invalid": "❌ Wrong start date. I quit."
+  },
+  "askEndTime": {
+    "prompt": "🛑 End date (YYYY-MM-DD HH:MM):",
+    "invalid": "❌ Wrong end date. I quit."
+  },
+  "askDescription": {
+    "prompt": "💬 Ahort description (max 300 chars), or `-` if there is nothin:",
+    "tooLong": "❌ The description is too long. I quit.."
+  },
+  "askOptions": {
+    "intro": "📜 Available roles:\n{{roleList}}\n\nProvide options in the following format:\n`option text | role | max attendees`\n. Write `Done` when you're ready.",
+    "prompt": "➕ New option:",
+    "emptyLabel": "⚠️ Option text can not be empty.",
+    "duplicateLabel": "⚠️ The option already exists. Provide with a new one.",
+    "roleNotFound": "❌ Role can not be found: {{role}}",
+    "invalidMax": "⚠️ Max attendees should be a positive number.",
+    "added": "✅ Added: {{label}} ({{role}}{{max, select, '' {}} other {, max {{max}} pers.}})",
+    "everyone": "*everyone*"
+  },
+  "cleanup": {
+    "deleted": "🗑️ Deleted: {{file}}",
+    "done": "✅ Cleanup is done."
+  },
+  "embed": {
+    "noDescription": "_No description provided_",
+    "timeLabel": "🕒 Date",
+    "countWithMax": "({{current}} / {{max}})",
+    "countOnly": "({{current}})",
+    "noOne": "_No one yet_",
+    "createdBy": "Created by: {{name}}"
+  },
+  "post": {
+    "deleteButton": "🗑️ Delete",
+    "success": "✅ The event is pusblished successfully in **#{{channel}}** channel!"
+  },
+  "error": {
+    "general": "Something went wrong.",
+    "cleanupError": "❌ Can not be deleted: {{file}}",
+    "onlyAdminDelete": "❌ Only admins can delete events.",
+    "eventAlreadyStarted": "⏰ This event has already started. You can't apply to this.",
+    "missingRole": "❌ You don't have the necessarry role to choose this option.",
+    "optionFull": "❌ This option is reached maximum ({{max}}) attendees.",
+    "invalidChannel": "❌ The chosen channel can not be found.",
+    "noResponse": "❌ There is no response. I quit."
+  },
+  "console": {
+    "ready": "✅ Bot logged in: {{tag}}",
+    "registeringCommands": "📦 Slash command registering is in progress...",
+    "commandsRegistered": "✅ Slash command successfully registered.",
+    "commandRegistrationError": "❌ Command registering error:",
+    "errorCreatingEvent": "❌ Error creating event:",
+    "saveError": "❌ This file can not be saved:",
+    "loadError": "❌ Error reading file:",
+    "fileDeleted": "🗑️ Deleted: {{filePath}}",
+    "fileDeleteFailed": "⚠️ File can not be deleted ({{filePath}}):"
+  }
+}

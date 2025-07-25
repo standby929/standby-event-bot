@@ -1,11 +1,11 @@
-// src/utils/persistence.ts
 import fs from 'fs/promises';
 import path from 'path';
 import { StandbyEvent } from '../types/eventTypes';
+import i18next from 'i18next';
 
 const EVENTS_DIR = path.join(__dirname, '../../data/events');
 
-// Egyszerű fájlírási sor (írási ütközések ellen)
+// Simple file write (against write conflicts)
 const writeQueue: Map<string, Promise<void>> = new Map();
 
 export async function saveEventToFile(event: StandbyEvent): Promise<void> {
@@ -16,9 +16,10 @@ export async function saveEventToFile(event: StandbyEvent): Promise<void> {
   const lastWrite = writeQueue.get(filename) || Promise.resolve();
 
   const newWrite = lastWrite.then(() =>
-    fs.mkdir(EVENTS_DIR, { recursive: true })
+    fs
+      .mkdir(EVENTS_DIR, { recursive: true })
       .then(() => fs.writeFile(filename, json))
-      .catch(err => console.error('❌ Nem sikerült menteni a fájlt:', err))
+      .catch(err => console.error(i18next.t('console.saveError'), err)),
   );
 
   writeQueue.set(filename, newWrite);
@@ -38,7 +39,7 @@ export async function loadEventsFromFiles(): Promise<Map<string, StandbyEvent>> 
       }
     }
   } catch (err) {
-    console.error('❌ Hiba a fájlok beolvasásakor:', err);
+    console.error(i18next.t('console.loadError'), err);
   }
   return events;
 }
@@ -47,8 +48,8 @@ export async function deleteEventFile(messageId: string): Promise<void> {
   const filePath = path.join(__dirname, '..', 'data', 'events', `${messageId}.json`);
   try {
     await fs.unlink(filePath);
-    console.log(`🗑️ Törölve: ${filePath}`);
+    console.log(i18next.t('console.fileDeleted', { filePath }));
   } catch (err) {
-    console.warn(`⚠️ Nem sikerült törölni a fájlt (${filePath}):`, err);
+    console.warn(i18next.t('console.fileDeleteFailed', { filePath }), err);
   }
 }

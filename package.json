@@ -15,7 +15,9 @@
     "discord-api-types": "^0.38.16",
     "discord.js": "^14.21.0",
     "dotenv": "^17.2.0",
-    "express": "^5.1.0"
+    "express": "^5.1.0",
+    "i18next": "^25.3.2",
+    "i18next-fs-backend": "^2.6.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.3",
