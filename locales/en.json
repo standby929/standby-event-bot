@@ -4,7 +4,8 @@
   },
   "common": {
     "start": "Creating event in private",
-    "none": "none"
+    "none": "none",
+    "availableLangs": "Available languages (e.g. en, hu)"
   },
   "askChannel": {
     "prompt": "📢 What channel do you want to post the event?\n{{channels}}",

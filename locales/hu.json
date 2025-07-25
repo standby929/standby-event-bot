@@ -4,7 +4,8 @@
   },
   "common": {
     "start": "Esemény létrehozása privátban",
-    "none": "nincs"
+    "none": "nincs",
+    "availableLangs": "Választható nyelv (pl. hu, en)"
   },
   "askChannel": {
     "prompt": "📢 Melyik csatornába posztoljuk az eseményt?\n{{channels}}",
