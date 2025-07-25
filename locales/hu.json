@@ -38,7 +38,8 @@
     "roleNotFound": "❌ Nem található ilyen szerepkör: {{role}}",
     "invalidMax": "⚠️ A maximális létszámnak pozitív egész számnak kell lennie.",
     "added": "✅ Hozzáadva: {{label}} ({{role}}{{max, select, '' {}} other {, max {{max}} fő}})",
-    "everyone": "*mindenki*"
+    "everyone": "*mindenki*",
+    "done": "Kész"
   },
   "cleanup": {
     "deleted": "🗑️ Törölve: {{file}}",

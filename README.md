@@ -17,7 +17,8 @@ So, this is a simple and interactive **Discord bot** that helps you create event
 
 1. A free [Discord account](https://discord.com)
 2. A Discord server where you are an **admin**
-3. A [GitHub](https://github.com) or any other version control system account
+3. A [GitHub](https://github.com) or any other version control system account  
+   _(Only if you want to deploy it somewhere)_
 4. Node.js installed on your computer (see below)
 5. A bit of patience :D
 
@@ -93,10 +94,10 @@ GUILD_ID=your-server-id-here
 
 To find your:
 
-- DISCORD_TOKEN -> from the bor page
+- DISCORD_TOKEN -> from the bot page
 - CLIENT_ID -> from the **Application > General info** page
-- GUILD*ID -> right click your server name in Discord - Copy Server ID  
-  *(You must enable "Developer Mode" in Disord's settings first)\_
+- GUILD_ID -> right click your server name in Discord - Copy Server ID  
+_(You must enable "Developer Mode" in Disord's settings first)_
 
 ### Step 6 - Start the bot!
 

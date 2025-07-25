@@ -3,3 +3,4 @@ dist
 node_modules
 integration-test
 src/assets
+README.md

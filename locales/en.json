@@ -36,7 +36,8 @@
     "roleNotFound": "❌ Role can not be found: {{role}}",
     "invalidMax": "⚠️ Max attendees should be a positive number.",
     "added": "✅ Added: {{label}} ({{role}}{{max, select, '' {}} other {, max {{max}} pers.}})",
-    "everyone": "*everyone*"
+    "everyone": "*everyone*",
+    "done": "Done"
   },
   "cleanup": {
     "deleted": "🗑️ Deleted: {{file}}",
