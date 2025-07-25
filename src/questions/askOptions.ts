@@ -19,7 +19,8 @@ export async function askOptions(dm: DMChannel, userId: string, guild: Guild, ev
       throw new Error('no-response');
     }
 
-    if (input.toLowerCase() === 'kész') break;
+    const doneKeyword = String(i18next.t('askOptions.done')).toLowerCase();
+    if (input.toLowerCase() === doneKeyword) break;
 
     const parts = input.split('|').map(x => x.trim());
     const labelRaw = parts[0];
