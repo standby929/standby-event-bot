@@ -61,6 +61,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
 
     const dm = await interaction.user.createDM();
     const guild = await client.guilds.fetch(GUILD_ID);
+    const botMember = await guild.members.fetchMe();
     const event: StandbyEvent = {
       title: '',
       description: null,
@@ -71,7 +72,7 @@ client.on('interactionCreate', async (interaction: Interaction) => {
       createdBy: '',
     };
 
-    await askChannel(dm, interaction.user.id, guild, event);
+    await askChannel(dm, interaction.user.id, guild, botMember, event);
     await askTitle(dm, interaction.user.id, event);
     await askStartTime(dm, interaction.user.id, event);
     await askEndTime(dm, interaction.user.id, event);
