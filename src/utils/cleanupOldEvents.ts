@@ -1,6 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 import { StandbyEvent } from '../types/eventTypes';
+import i18next from 'i18next';
 
 const EVENTS_DIR = path.join(__dirname, '..', '..', 'data', 'events');
 
@@ -20,9 +21,9 @@ function loadEvent(filePath: string): StandbyEvent | null {
 function deleteFile(filePath: string) {
   try {
     fs.unlinkSync(filePath);
-    console.log(`🗑️ Törölve: ${path.basename(filePath)}`);
+    console.log(i18next.t('cleanup.deleted', { file: path.basename(filePath) }));
   } catch (err) {
-    console.error(`❌ Nem sikerült törölni: ${filePath}`, err);
+    console.error(i18next.t('error.cleanupError', { file: filePath }), err);
   }
 }
 
@@ -41,5 +42,5 @@ export function cleanupOldEvents() {
     }
   });
 
-  console.log('✅ Takarítás kész.');
+  console.log(i18next.t('cleanup.done'));
 }

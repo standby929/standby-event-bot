@@ -1,0 +1,77 @@
+{
+  "dm": {
+    "start": "Privátban folytatjuk az esemény létrehozását."
+  },
+  "common": {
+    "start": "Esemény létrehozása privátban",
+    "none": "nincs"
+  },
+  "askChannel": {
+    "prompt": "📢 Melyik csatornába posztoljuk az eseményt?\n{{channels}}",
+    "invalid": "❌ Érvénytelen szám. Kiléptem."
+  },
+  "askTitle": {
+    "prompt": "📝 Mi az esemény címe? (max 50 karakter)",
+    "invalid": "❌ Hibás cím. Kiléptem."
+  },
+  "askStartTime": {
+    "prompt": "⏰ Kezdési időpont (ÉÉÉÉ-HH-NN ÓÓ:PP):",
+    "invalid": "❌ Hibás kezdési dátum. Kiléptem."
+  },
+  "askEndTime": {
+    "prompt": "🛑 Záró időpont (ÉÉÉÉ-HH-NN ÓÓ:PP):",
+    "invalid": "❌ Hibás záró dátum. Kiléptem."
+  },
+  "askDescription": {
+    "prompt": "💬 Rövid leírás (max 300 karakter), vagy `-` ha nincs:",
+    "noResponse": "❌ Nem érkezett válasz. Kiléptem.",
+    "tooLong": "❌ A leírás túl hosszú. Kiléptem."
+  },
+  "askOptions": {
+    "intro": "📜 Elérhető szerepkörök:\n{{roleList}}\n\nAdj meg válaszopciókat a következő formátumban:\n`válasz szöveg | szerepkör | max létszám`\nBármelyik mező kihagyható. Írd be, hogy `Kész` ha végeztél.",
+    "prompt": "➕ Új válaszopció:",
+    "noResponse": "❌ Nem kaptam választ. Kiléptem.",
+    "emptyLabel": "⚠️ A válasz szöveg nem lehet üres.",
+    "duplicateLabel": "⚠️ Már van ilyen opció. Adj meg újat.",
+    "roleNotFound": "❌ Nem található ilyen szerepkör: {{role}}",
+    "invalidMax": "⚠️ A maximális létszámnak pozitív egész számnak kell lennie.",
+    "added": "✅ Hozzáadva: {{label}} ({{role}}{{max, select, '' {}} other {, max {{max}} fő}})",
+    "everyone": "*mindenki*"
+  },
+  "cleanup": {
+    "deleted": "🗑️ Törölve: {{file}}",
+    "done": "✅ Takarítás kész."
+  },
+  "embed": {
+    "noDescription": "_Nincs leírás megadva_",
+    "timeLabel": "🕒 Időpont",
+    "countWithMax": "({{current}} / {{max}})",
+    "countOnly": "({{current}})",
+    "noOne": "_Még senki_",
+    "createdBy": "Létrehozta: {{name}}"
+  },
+  "post": {
+    "deleteButton": "🗑️ Törlés",
+    "success": "✅ Az esemény sikeresen közzétéve a **#{{channel}}** csatornába!"
+  },
+  "error": {
+    "general": "Valami hiba történt.",
+    "cleanupError": "❌ Nem sikerült törölni: {{file}}",
+    "onlyAdminDelete": "❌ Csak admin törölhet eseményt.",
+    "eventAlreadyStarted": "⏰ Ez az esemény már elkezdődött. Nem lehet rá jelentkezni.",
+    "missingRole": "❌ Ehhez az opcióhoz nem rendelkezel megfelelő szerepkörrel.",
+    "optionFull": "❌ Ez az opció elérte a maximális ({{max}}) főt.",
+    "invalidChannel": "❌ Nem sikerült megtalálni a kiválasztott csatornát."
+  },
+  "console": {
+    "ready": "✅ Bot bejelentkezve: {{tag}}",
+    "registeringCommands": "📦 Slash parancs regisztrálása...",
+    "commandsRegistered": "✅ Slash parancs regisztrálva.",
+    "commandRegistrationError": "❌ Parancsregisztrációs hiba:",
+    "errorCreatingEvent": "❌ Hiba az esemény létrehozása során:",
+    "saveError": "❌ Nem sikerült menteni a fájlt:",
+    "loadError": "❌ Hiba a fájlok beolvasásakor:",
+    "fileDeleted": "🗑️ Törölve: {{filePath}}",
+    "fileDeleteFailed": "⚠️ Nem sikerült törölni a fájlt ({{filePath}}):"
+  }
+}

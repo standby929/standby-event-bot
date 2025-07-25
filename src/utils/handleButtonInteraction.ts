@@ -1,14 +1,11 @@
-import {
-  ButtonInteraction,
-  GuildMember,
-} from 'discord.js';
+import { ButtonInteraction, GuildMember } from 'discord.js';
 import { StandbyEvent } from '../types/eventTypes';
 import { deleteEventFile, saveEventToFile } from './persistence';
 import { buildEventEmbed } from './embedBuilder';
 
 export async function handleButtonInteraction(
   interaction: ButtonInteraction,
-  activeEvents: Map<string, StandbyEvent>
+  activeEvents: Map<string, StandbyEvent>,
 ): Promise<void> {
   const messageId = interaction.message.id;
   const event = activeEvents.get(messageId);
@@ -25,7 +22,7 @@ export async function handleButtonInteraction(
     if (!isAdmin) {
       await interaction.reply({
         content: '❌ Csak admin törölhet eseményt.',
-        ephemeral: true
+        ephemeral: true,
       });
       return;
     }
@@ -42,7 +39,7 @@ export async function handleButtonInteraction(
   if (isExpired) {
     await interaction.reply({
       content: '⏰ Ez az esemény már elkezdődött. Nem lehet rá jelentkezni.',
-      ephemeral: true
+      ephemeral: true,
     });
     return;
   }
@@ -54,9 +51,7 @@ export async function handleButtonInteraction(
   if (!option) return;
 
   const member = interaction.member as GuildMember;
-  const hasRole = option.roleId
-    ? member.roles.cache.has(option.roleId)
-    : true;
+  const hasRole = option.roleId ? member.roles.cache.has(option.roleId) : true;
 
   if (!hasRole) {
     await interaction.reply({
