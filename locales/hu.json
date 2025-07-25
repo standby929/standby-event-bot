@@ -8,8 +8,9 @@
     "availableLangs": "Választható nyelv (pl. hu, en)"
   },
   "askChannel": {
-    "prompt": "📢 Melyik csatornába posztoljuk az eseményt?\n{{channels}}",
-    "invalid": "❌ Érvénytelen szám. Kiléptem."
+    "prompt": "📢 Válaszd ki a csatornát, ahova az eseményt küldjük:\n\n{{channels}}\n\nÍrd be a sorszámot.",
+    "invalid": "❌ Hibás választás. Kiléptem.",
+    "noChannels": "❌ Nincs olyan csatorna, ahova a botnak joga lenne írni."
   },
   "askTitle": {
     "prompt": "📝 Mi az esemény címe? (max 50 karakter)",

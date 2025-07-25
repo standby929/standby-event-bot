@@ -164,7 +164,7 @@ In any server channel where the bot is present, type:
 
 Then follow the steps the bot sends you in **private message**:
 
-1. Choose the channel where the event should be posted
+1. Choose the channel where the event should be posted (only those channels are listed that the bot has access to)
 2. Set the title, start/end time
 3. Add a description (optional)
 4. Define the RSVP options (like "Coming", "Not coming", "Maybe", "Waitlist")

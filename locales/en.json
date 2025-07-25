@@ -9,7 +9,8 @@
   },
   "askChannel": {
     "prompt": "📢 What channel do you want to post the event?\n{{channels}}",
-    "invalid": "❌ Invalid number. I quit."
+    "invalid": "❌ Invalid number. I quit.",
+    "noChannels": "❌ There is no channel where the bot can post."
   },
   "askTitle": {
     "prompt": "📝 What's the title of the event? (max 50 chars)",
